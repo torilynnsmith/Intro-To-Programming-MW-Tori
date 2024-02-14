@@ -6,6 +6,10 @@ public class BallController : MonoBehaviour
 {
     //CCNY M/W In-Class Script
 
+    //TODAY'S LESSON
+    //1. Make the Ball Bounce
+    //2. Reset & Relaunch the Ball
+
     //GLOBAL VARIALBES
     public Rigidbody2D rbBall; //declare Rigidbody2D variable, set in Inspector via drag and dropping
 
