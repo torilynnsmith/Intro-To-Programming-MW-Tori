@@ -18,12 +18,30 @@ public class BallController : MonoBehaviour
     private float xDir; //declare x direction float
     private float yDir; //declare y direction float
 
+    public bool inPlay;
+    public Vector3 ballStartPos; 
+
     // Start is called before the first frame update
     void Start()
     {
         //This is a comment! 
         //Debug.Log("hello world"); //print to console
 
+        Launch(); 
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (inPlay == false)
+        {
+            transform.position = ballStartPos;
+            Launch(); 
+        }
+    }
+
+    void Launch()
+    {
         Vector3 direction = new Vector3(0, 0, 0); //declare and set a new Vector 3 variable
                                                   //Vector3 (x,y,z) = represenation of 3D vectors and points (can still be used in 2D projects!)
 
@@ -56,11 +74,19 @@ public class BallController : MonoBehaviour
 
         //add force to start movemnt
         rbBall.AddForce(direction * force); //launch the ball (apply force in a direction on the RigidBody)
+        inPlay = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    //EVENTS UPON VOLLISION
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        //Debug.Log("object that collided w/ Ball: " + collision.gameObject.name);
+        if (collision.gameObject.name == "Left Wall" || collision.gameObject.name == "Right Wall")
+        {
+            //Debug.Log("collided with Left/Right Wall");
+            rbBall.velocity = Vector3.zero;
+            inPlay = false;
+        }
+
     }
 }
