@@ -6,10 +6,6 @@ public class BallController : MonoBehaviour
 {
     //CCNY M/W In-Class Script
 
-    //TODAY'S LESSON
-    //1. Make the Ball Bounce
-    //2. Reset & Relaunch the Ball
-
     //GLOBAL VARIALBES
     public Rigidbody2D rbBall; //declare Rigidbody2D variable, set in Inspector via drag and dropping
 
@@ -18,8 +14,8 @@ public class BallController : MonoBehaviour
     private float xDir; //declare x direction float
     private float yDir; //declare y direction float
 
-    public bool inPlay;
-    public Vector3 ballStartPos; 
+    public bool inPlay; //set to true/false if ball is in Play, set in Inspector
+    public Vector3 ballStartPos; //Ball starting position, set in Inspector
 
     // Start is called before the first frame update
     void Start()
@@ -27,16 +23,17 @@ public class BallController : MonoBehaviour
         //This is a comment! 
         //Debug.Log("hello world"); //print to console
 
-        Launch(); 
+        Launch(); //call the Launch Function at Start
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inPlay == false)
+        //Check if Ball is in Play
+        if (inPlay == false) //if Ball is NOT in Play
         {
-            transform.position = ballStartPos;
-            Launch(); 
+            transform.position = ballStartPos; //set Ball to start position
+            Launch(); //call Launch() to automatically relaunch the Ball
         }
     }
 
@@ -78,14 +75,17 @@ public class BallController : MonoBehaviour
     }
 
     //EVENTS UPON VOLLISION
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision) //MAKE SURE THIS IS 2D!!! Won't work without the 2D qualifier
+        //FOR COLLISIONS TO WORK: both objects must have colliders on them
     {
         //Debug.Log("object that collided w/ Ball: " + collision.gameObject.name);
+
+        //when Ball collides with Left or Right Walls, reset to original position at ballStartPos & change score
         if (collision.gameObject.name == "Left Wall" || collision.gameObject.name == "Right Wall")
         {
             //Debug.Log("collided with Left/Right Wall");
-            rbBall.velocity = Vector3.zero;
-            inPlay = false;
+            rbBall.velocity = Vector3.zero; //zeros out the force being applied to Ball so the force doesn't stack
+            inPlay = false; //set inPlay to False, will cause the inPlay check in Update() to reset the position and automatically Launch()
         }
 
     }
