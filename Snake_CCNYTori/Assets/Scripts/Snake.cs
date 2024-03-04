@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq; 
 
 public class Snake : MonoBehaviour
 {
-    //VOLLEGR NOW IN CLSSS MW
+    //COLLE NOW IN CLSSS MW
 
     //GLOBAL VARIABLES
     Vector3 dir = Vector3.right; //decare default movement direction
                                  //Remember the difference b/w Vector2(x,y) & Vector3(x,y,z)
                                  //there is shorthand for Vector2/3 directions.
                                  //In this one, Vector3.right = Vector3(1,0,0), moving it to the RIGHT
+
+    //Keep Track of Tail Elements
+    List<Transform> tail = new List<Transform>();
+    bool ate = false;
+    public GameObject tailPrefab; 
 
     // Start is called before the first frame update
     void Start()
@@ -36,12 +42,35 @@ public class Snake : MonoBehaviour
 
     void MoveSnake()
     {
+        Vector3 gap = transform.position;
+
         //In Snake, the snake is ALWAYS moving in some direction, never standing still.
         //MOVE SNAKE HEAD IN A DIRECTION
         transform.Translate(dir);
         //Translate moves the transform property in the direction and distance of the translation,
         //In this case, we are moving in the whatever direction we've set the dir variable to be the distance of that variable
 
+        if (ate)
+        {
+            Debug.Log("ate =" + ate);
+
+            GameObject tailSec = (GameObject)Instantiate(tailPrefab, gap, Quaternion.identity);
+            tail.Insert(0, tailSec.transform);
+
+            ate = false; 
+        }
+
+        //check if snake has a tail
+       else  if (tail.Count > 0)
+        {
+            //move the last Tail to where the Head previously was
+            tail.Last().position = gap;
+
+            //Keep our Tail List in order!
+            //Add Last Tail element to the front of the list and remove from the back
+            tail.Insert(0, tail.Last());
+            tail.RemoveAt(tail.Count - 1); 
+        }
     }
 
     private void ChangeDirection()
@@ -74,6 +103,8 @@ public class Snake : MonoBehaviour
         //When Snake collides with Food...
         if (collision.gameObject.tag == "Food")
         {
+            ate = true;
+
             //Debug.Log("food eaten");
             Destroy(collision.gameObject); //Remove the Food
 
