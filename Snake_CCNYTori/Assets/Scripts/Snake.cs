@@ -19,7 +19,7 @@ public class Snake : MonoBehaviour
     bool ate = false; //set a bool to determine if the snake has eaten something. Will change upon Trigger w/ FoodPrefabs
     public GameObject tailPrefab; //set the TailPrefab in the Inspector to Instantiate it through code.
 
-    public GameManager myManager; 
+    public GameManager myManager; //reference to the GameManager script, set in Inspector
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +43,7 @@ public class Snake : MonoBehaviour
         ChangeDirection(); 
     }
 
+    //Make the snake move
     void MoveSnake()
     {
         //SAVE THE CURRENT POSITION (Where the head "previously" was. This is the gap that tail parts will move into)
@@ -91,6 +92,7 @@ public class Snake : MonoBehaviour
         }
     }
 
+    //Change the Snakes movement direction when a Key is pressed
     private void ChangeDirection()
     {
         if(Input.GetKey(KeyCode.RightArrow)) //if the Right Arrow is continuously pressed down, then...
@@ -127,7 +129,7 @@ public class Snake : MonoBehaviour
             //Debug.Log("food eaten");
             Destroy(collision.gameObject); //Remove the Food
             //Change Score
-            myManager.FoodEaten(); 
+            myManager.FoodEaten(); //call the Food Eaten Function in the GameManager script to change the score.
         }
         //DIY: write code so that if the snake head collides with the wall, it resets.
     }

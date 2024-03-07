@@ -10,7 +10,7 @@ public class FoodSpawn : MonoBehaviour
     public GameObject foodPrefab;
 
     //Border positions
-    //Get Border Positions (so we can spawn the food within them)
+    //Get Border Positions (so we can spawn the food within them), set in Inspector
     public Transform wallTop;
     public Transform wallBottom;
     public Transform wallLeft;

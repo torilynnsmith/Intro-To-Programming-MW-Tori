@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     //IN CLASS CCNY M/W
 
     //GLOBAL VARIABLES
-    public TextMeshProUGUI foodScoreText;
-    public int foodScore = 0; 
+    public TextMeshProUGUI foodScoreText; //Text Object for Food Score Text
+    public int foodScore = 0; //declare and set initial Food Score
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +20,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foodScoreText.text = "Score: " + foodScore; 
+        foodScoreText.text = "Score: " + foodScore; //update foodScoreText UI
     }
 
-    public void FoodEaten()
+    //To be run when Food is Eaten....
+    public void FoodEaten() 
     {
-        foodScore++; 
+        foodScore++; //add 1 to food score
     }
 }
