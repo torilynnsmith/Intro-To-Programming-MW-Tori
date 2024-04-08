@@ -22,15 +22,15 @@ public class PlayerController : MonoBehaviour
     public bool isJumping = false; //declare and set a bool for if we're jumping or not to false (b/c we're not jumping when the game starts) 
 
     //player health
-    public int maxHealth = 20;
-    public int currentHealth;
-    public HealthBar healthBarScript; 
+    public int maxHealth = 20; //set and declare the maxHealth
+    public int currentHealth; //declare currentHealthm, set in Start(), going to fluctuate as the game plays
+    public HealthBar healthBarScript; //reference the HealthBar script, set in inspector
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
-        healthBarScript.SetMaxHealth(maxHealth); 
+        currentHealth = maxHealth; //set currentHealth equal to maxHealth
+        healthBarScript.SetMaxHealth(maxHealth); //set the SetMaxHealth(int) to the maxHealth value from this script
     }
 
     // Update is called once per frame
@@ -80,15 +80,18 @@ public class PlayerController : MonoBehaviour
             isJumping = false; //set isJumping to false
         }
 
+        //When colliding with a dangerous object (lava, enemy, etc.)
         if (collision.gameObject.tag == "Lava")
         {
-            TakeDamage(2); 
+            //Debug.Log("hit lava rock");
+            TakeDamage(2); //call TakeDamage(), reduce health by 2
         }
     }
 
+    //Damage the player (make public to access from other scripts!) 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        healthBarScript.SetHealth(currentHealth); 
+        currentHealth -= damage; //reduce current health by damage amount
+        healthBarScript.SetHealth(currentHealth); // set the SetHealth(int) to the currentHealth value from this script
     }
 }
