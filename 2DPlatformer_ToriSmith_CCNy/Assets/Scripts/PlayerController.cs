@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     //"flip" direction variables
     public bool flippedLeft; //keeps track of which way our sprite IS CURRENTLY facing
     public bool facingLeft; //keeps track of which way our sprite SHOULD BE facing
+                            //NOTE: Rename FacingRight to FacingLeft
 
     // Start is called before the first frame update
     void Start()
@@ -53,15 +54,17 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("A pressed"); //print to console
             newPos.x -= playerSpeed; //affect x coordinate, move left
-            facingLeft = true;
-            Flip(facingLeft); 
+            facingLeft = true; ////facing/moving Left
+                               //NOTE: Changed to true!
+            Flip(facingLeft); //call Flip(), feed it a bool
         }
         else if (Input.GetKey(KeyCode.D))
         {
             //Debug.Log("D pressed"); //print to console
             newPos.x += playerSpeed; //affect x coordinate, move right
-            facingLeft = false;
-            Flip(facingLeft); 
+            facingLeft = false; //facing/moving Right
+                                //NOTE: Changed to false! 
+            Flip(facingLeft); //call Flip(), feed it a bool
         }
         transform.position = newPos; //update player object with the new position
     }
@@ -106,15 +109,17 @@ public class PlayerController : MonoBehaviour
     void Flip(bool facingLeft)
     {
         //Debug.Log("Flip() called. facingRight = " + facingRight);
-        if (facingLeft && !flippedLeft)
+        if (facingLeft && !flippedLeft) //if player is facing Left but flipped Right (NOT flipped Left)...
         {
-            transform.Rotate(0, -180, 0);
-            flippedLeft = true; 
+            
+            transform.Rotate(0, -180, 0);//flip the whole sprite and it's childed Launch point                              
+            flippedLeft = true; //flippedLeft = true
         }
-        if (!facingLeft && flippedLeft)
+        if (!facingLeft && flippedLeft) //if player is facing right (NOT facing Left) but flipped Left...
         {
-            transform.Rotate(0, -180, 0);
-            flippedLeft = false; 
+                
+            transform.Rotate(0, -180, 0);//flip the whole sprite and it's childed Launch point 
+            flippedLeft = false; //flippedLeft = false
         }
     }
 }
