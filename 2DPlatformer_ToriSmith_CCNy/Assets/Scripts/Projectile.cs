@@ -15,10 +15,22 @@ public class Projectile : MonoBehaviour
     public float projectileCount; //counts down time until the projectile destorys itself. (
                                   //currenlty set to 0
 
+    //flip launch direction
+    public PlayerController playerControllerScript; 
+    public bool facingLeft; 
+
     // Start is called before the first frame update
     void Start()
     {
         projectileCount = projectileLife; //set projectileCount equal to projectile Life
+
+        playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        facingLeft = playerControllerScript.facingLeft;
+        if (!facingLeft)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0); 
+        }
     }
 
     // Update is called once per frame
@@ -39,7 +51,14 @@ public class Projectile : MonoBehaviour
     //VS: Moving w/ transform -> Update()
 
     {
-        projectileRb.velocity = new Vector3(speed, projectileRb.velocity.y, 0); //shoot to the right according to your Vector3
+        if (facingLeft) //if we're facing left
+        {
+            projectileRb.velocity = new Vector3(-speed, projectileRb.velocity.y, 0); //shoot to the right according to your Vector3
+        }
+        else //if we're facing right
+        {
+            projectileRb.velocity = new Vector3(speed, projectileRb.velocity.y, 0); //shoot to the right according to your Vector3
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

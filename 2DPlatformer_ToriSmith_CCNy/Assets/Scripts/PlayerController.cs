@@ -97,6 +97,12 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("hit lava rock");
             TakeDamage(2); //call TakeDamage(), reduce health by 2
         }
+
+        //When colliding with an enemy
+        if (collision.gameObject.tag == "Enemy")
+        {
+            TakeDamage(3); //call TakeDamage(), reduce health by 2
+        }
     }
 
     //Damage the player (make public to access from other scripts!) 
@@ -104,6 +110,7 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage; //reduce current health by damage amount
         healthBarScript.SetHealth(currentHealth); // set the SetHealth(int) to the currentHealth value from this script
+        GameOver(); 
     }
 
     void Flip(bool facingLeft)
@@ -120,6 +127,14 @@ public class PlayerController : MonoBehaviour
                 
             transform.Rotate(0, -180, 0);//flip the whole sprite and it's childed Launch point 
             flippedLeft = false; //flippedLeft = false
+        }
+    }
+
+    void GameOver()
+    {
+        if (currentHealth <= 0)
+        {
+            //do something
         }
     }
 }
