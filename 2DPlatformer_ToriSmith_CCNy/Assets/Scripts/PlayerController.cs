@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
     public bool facingLeft; //keeps track of which way our sprite SHOULD BE facing
                             //NOTE: Rename FacingRight to FacingLeft
 
+    //sound effect stuff
+    public AudioSource lavaRockAudio; //declare Audio Source component variable, set it in the inspector (mine is on the lava rock i'm colliding with)
+
     // Start is called before the first frame update
     void Start()
     {
@@ -96,6 +99,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Lava")
         {
             //Debug.Log("hit lava rock");
+            lavaRockAudio.Play(); //play lava audio
             TakeDamage(2); //call TakeDamage(), reduce health by 2
         }
 
@@ -103,6 +107,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             TakeDamage(3); //call TakeDamage(), reduce health by 2
+        }
+
+        //when colliding with a health item
+        if(collision.gameObject.tag == "Healing")
+        {
+            Heal(3); //call Heal()
         }
     }
 
@@ -112,6 +122,16 @@ public class PlayerController : MonoBehaviour
         currentHealth -= damage; //reduce current health by damage amount
         healthBarScript.SetHealth(currentHealth); // set the SetHealth(int) to the currentHealth value from this script
         GameOver(); //call GameOver()
+    }
+
+    //heal the player
+    public void Heal(int healing)
+    {
+        currentHealth += healing; //raise the current health by the healing amount
+        healthBarScript.SetHealth(currentHealth); // set the SetHealth(int) to the currentHealth value from this script
+        //Debug.Log("currentHealth = " + currentHealth);
+        //NOTE: destroy the heart
+
     }
 
     void Flip(bool facingLeft)
