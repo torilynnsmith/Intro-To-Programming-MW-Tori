@@ -32,7 +32,7 @@ public class GoalReached : MonoBehaviour
         //if the player collides with this trigger
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("End of Level."); 
+            //Debug.Log("End of Level."); 
             SceneManager.LoadScene(sceneID); //Load the requested scene (check the number of the scene you want in your build settings) 
         }
     }

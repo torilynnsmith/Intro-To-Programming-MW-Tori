@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; //use the Scene Management Library
 
 public class PlayerController : MonoBehaviour
 {
@@ -91,7 +92,7 @@ public class PlayerController : MonoBehaviour
             isJumping = false; //set isJumping to false
         }
 
-        //When colliding with a dangerous object (lava, enemy, etc.)
+        //When colliding with a dangerous object (in this case lava)
         if (collision.gameObject.tag == "Lava")
         {
             //Debug.Log("hit lava rock");
@@ -110,7 +111,7 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage; //reduce current health by damage amount
         healthBarScript.SetHealth(currentHealth); // set the SetHealth(int) to the currentHealth value from this script
-        GameOver(); 
+        GameOver(); //call GameOver()
     }
 
     void Flip(bool facingLeft)
@@ -130,11 +131,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Load the End Scene if any of the following conditions are met
     void GameOver()
     {
-        if (currentHealth <= 0)
+        //Debug.Log("currentHealth = " + currentHealth); //print to console
+        if (currentHealth <= 0) //if currentHealth is equal to or less than 0....
         {
-            //do something
+            SceneManager.LoadScene(2); //Load the End Scene (Scene ID 2 in my build currenlty) 
         }
     }
 }
